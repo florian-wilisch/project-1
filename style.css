@@ -1,0 +1,23 @@
+html, body {
+  display: flex;
+  height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+
+.grid {
+  width: 600px;
+  height: 600px;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.cell {
+  width: 5%;
+  height: 5%;
+  border: 1px solid black;
+}
+
+.wall {
+  background-color: gray;
+}
