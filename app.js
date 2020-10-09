@@ -5,7 +5,8 @@ let cells = []
 const path = [19,20,21,21,22,23,24,25,28,29,30,31,32,33,34,37,43,46,52,55,61,64,70,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,91,106,109,110,111,112,113,115,116,117,118,120,121,122,123,124,131,133,136,138,144,145,146,147,148,149,150,151,154,155,156,157,158,159,160,161,167,169,170,171,172,174,185,192,199,200,201,202,203,204,205,208,209,210,211,212,213,214,217,221,223,226,228,232,235,239,241,242,243,244,246,250,253,254,255,256,257,264,265,266,267,268,271,286,289,290,291,292,293,294,295,296,297,298,299,300,301,302,303,304]
 const superfood = [55,70,235,250]
 let pacmanPosition = 210
-let blueGhostPostion = 116
+let blueGhostPostion = 203
+// 116
 let redGhostPosition = 117
 let yellowGhostPosition = 170
 let pinkGhostPostion = 171
@@ -34,7 +35,6 @@ for (let i = 0; i < width ** 2; i++) {
   }
   // div.innerHTML = i
 }
-
 
 
 //PACMAN MOVEMENT
@@ -98,11 +98,78 @@ document.addEventListener('keydown', (action) => {
   }
 })
 
+//GHOST MOVEMENT
+
+const up = ' - width'
+const down = ' + width'
+const left = ' - 1'
+const right = ' + 1'
+const ghostDirections = [up,left,down,right]
+// let position1
+// let position2
+let rdmDireString = 0
+let blueGhostMvmt = 0
+// position1 = blueGhostPostion
+function generateRdmDirect1(){
+  rdmDireString = ghostDirections[Math.floor(Math.random() * 4)]
+  console.log(rdmDireString)
+  if (!cells[eval(blueGhostPostion + rdmDireString)].classList.contains('wall')) {
+    blueGhostMvmt = setInterval(() => {
+      cells[blueGhostPostion].classList.remove('blue-ghost')
+      blueGhostPostion = eval(blueGhostPostion + rdmDireString)
+  
+      if (cells[blueGhostPostion].classList.contains('wall')) {
+        generateRdmDirect2()
+        clearInterval(blueGhostMvmt)
+      }
+      cells[blueGhostPostion].classList.add('blue-ghost')
+    }, 350)
+  }
+}
+function generateRdmDirect2(){
+  rdmDireString = ghostDirections[Math.floor(Math.random() * 4)]
+  console.log(rdmDireString)
+  if (!cells[eval(blueGhostPostion + rdmDireString)].classList.contains('wall')) {
+    blueGhostMvmt = setInterval(() => {
+      cells[blueGhostPostion].classList.remove('blue-ghost')
+      blueGhostPostion = eval(blueGhostPostion + rdmDireString)
+      cells[blueGhostPostion].classList.add('blue-ghost')
+      if (cells[blueGhostPostion].classList.contains('wall')) {
+        clearInterval(blueGhostMvmt)
+        generateRdmDirect1()
+      }
+      cells[blueGhostPostion].classList.add('blue-ghost')
+    }, 350)
+  }
+}
+
+// generateRdmDirect1()
 
 
-// going to 
-// 143
-// 162
-// landing on
-// 161
-// 144
+
+
+
+  // } else {
+  //   for (let i = 0; (cells[eval(blueGhostPostion + rdmDireString)].classList.contains('wall')); i++) {
+  //     rdmDireString = ghostDirections[Math.floor(Math.random() * 4)]
+  //     blueGhostMvmt = setInterval(() => {
+  //       cells[blueGhostPostion].classList.remove('blue-ghost')
+  //       blueGhostPostion = eval(blueGhostPostion + rdmDireString)
+  //       cells[blueGhostPostion].classList.add('blue-ghost')
+  //       if (cells[blueGhostPostion].classList.contains('wall')) {
+  //         clearInterval(blueGhostMvmt)
+  //       }
+  //     }, 350)
+  //   }
+    // rdmDireString = ghostDirections[Math.floor(Math.random() * 4)]
+  // }
+
+// if (pacMvmt > 0) {
+
+// }
+// position2 = blueGhostPostion
+// console.log(position1)
+// console.log(position2)
+// console.log(blueGhostPostion + rdmDireString)
+// console.log(eval(blueGhostPostion + rdmDireString))
+// console.log(blueGhostPostion)
