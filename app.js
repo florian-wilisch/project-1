@@ -113,41 +113,37 @@ let blueGhostMvmt = 0
 function generateRdmDirect1(){
   rdmDireString = ghostDirections[Math.floor(Math.random() * 4)]
   console.log(rdmDireString)
-  if (!cells[eval(blueGhostPostion + rdmDireString)].classList.contains('wall')) {
-    blueGhostMvmt = setInterval(() => {
+  blueGhostMvmt = setInterval(() => {
+    if (!cells[eval(blueGhostPostion + rdmDireString)].classList.contains('wall')) {
       cells[blueGhostPostion].classList.remove('blue-ghost')
       blueGhostPostion = eval(blueGhostPostion + rdmDireString)
-  
-      if (cells[blueGhostPostion].classList.contains('wall')) {
-        generateRdmDirect2()
-        clearInterval(blueGhostMvmt)
-      }
       cells[blueGhostPostion].classList.add('blue-ghost')
-    }, 350)
-  }
+    } else {
+      generateRdmDirect2()
+      clearInterval(blueGhostMvmt)
+    }
+  }, 350)
 }
 function generateRdmDirect2(){
   rdmDireString = ghostDirections[Math.floor(Math.random() * 4)]
   console.log(rdmDireString)
-  if (!cells[eval(blueGhostPostion + rdmDireString)].classList.contains('wall')) {
-    blueGhostMvmt = setInterval(() => {
+  blueGhostMvmt = setInterval(() => {
+    if (!cells[eval(blueGhostPostion + rdmDireString)].classList.contains('wall')) {
       cells[blueGhostPostion].classList.remove('blue-ghost')
       blueGhostPostion = eval(blueGhostPostion + rdmDireString)
       cells[blueGhostPostion].classList.add('blue-ghost')
-      if (cells[blueGhostPostion].classList.contains('wall')) {
-        clearInterval(blueGhostMvmt)
-        generateRdmDirect1()
-      }
-      cells[blueGhostPostion].classList.add('blue-ghost')
-    }, 350)
-  }
+    } else {
+      clearInterval(blueGhostMvmt)
+      generateRdmDirect1()
+    }
+  }, 350)
 }
 
 // generateRdmDirect1()
 
-
-
-
+// pathfinding
+// A*
+// ghosts don't use the tunnel
 
   // } else {
   //   for (let i = 0; (cells[eval(blueGhostPostion + rdmDireString)].classList.contains('wall')); i++) {
