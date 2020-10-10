@@ -30,12 +30,33 @@ for (let i = 0; i < width ** 2; i++) {
     div.classList.add('pink-ghost')
   } else if (superfood.indexOf(i) >= 0) {
     div.classList.add('superfood')
-  } else if (path.indexOf(i) >= 0) {} else {
+  } else if (path.indexOf(i) >= 0) {
+  } else {
     div.classList.add('wall')
   }
-  // div.innerHTML = i
+  div.innerHTML = i
 }
 
+//CREATING MATRIX GRID
+const pathArray = []
+for (let i = 0; i < cells.length - 1; i++) {
+  if (path.includes(i)) {
+    pathArray[i] = 0
+  } else {
+    pathArray[i] = 1
+  }
+  pathArray.push(pathArray[i])
+}
+// console.log(pathArray)
+
+//Cut into rows
+const rowArray = []
+let tempArray = []
+for (let i = 0; i < pathArray.length; i += width) {
+  tempArray = pathArray.slice(i, i + width - 1)
+  rowArray.push(tempArray)
+}
+console.log(rowArray)
 
 //PACMAN MOVEMENT
 //Including tunnel
@@ -145,27 +166,21 @@ function generateRdmDirect2(){
 // A*
 // ghosts don't use the tunnel
 
-  // } else {
-  //   for (let i = 0; (cells[eval(blueGhostPostion + rdmDireString)].classList.contains('wall')); i++) {
-  //     rdmDireString = ghostDirections[Math.floor(Math.random() * 4)]
-  //     blueGhostMvmt = setInterval(() => {
-  //       cells[blueGhostPostion].classList.remove('blue-ghost')
-  //       blueGhostPostion = eval(blueGhostPostion + rdmDireString)
-  //       cells[blueGhostPostion].classList.add('blue-ghost')
-  //       if (cells[blueGhostPostion].classList.contains('wall')) {
-  //         clearInterval(blueGhostMvmt)
-  //       }
-  //     }, 350)
-  //   }
-    // rdmDireString = ghostDirections[Math.floor(Math.random() * 4)]
-  // }
 
-// if (pacMvmt > 0) {
+//PATHFINDING with EasystarJS
+//115 -> 210
+// var easystarjs = require('easystarjs')
+// var easystar = new easystarjs.js()
+// var easystar = new EasyStar.js()
 
-// }
-// position2 = blueGhostPostion
-// console.log(position1)
-// console.log(position2)
-// console.log(blueGhostPostion + rdmDireString)
-// console.log(eval(blueGhostPostion + rdmDireString))
-// console.log(blueGhostPostion)
+easystar.setGrid(rowArray)
+easystar.setAcceptableTiles([0])
+
+easystar.findPath(7, 6, 12, 11, function( path ) {
+  if (path === null) {
+    alert('Path was not found.')
+  } else {
+    alert('Path was found. The first Point is ' + path[0].x + ' ' + path[0].y)
+  }
+})
+easystar.calculate()
