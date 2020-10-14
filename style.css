@@ -14,6 +14,7 @@ html, body {
   align-content: center;
 }
 
+
 .cell {
   width: 5.5%;
   height: 5.5%;
@@ -29,14 +30,13 @@ html, body {
   background-image: none;
 }
 
+.no-background {
+  background-image: none;
+}
+
 .superfood {
   filter: hue-rotate(270deg);
   background-size: 15px;  
-}
-
-.pacman {
-  content: url(./images/pacman.png);
-  background-image: none;
 }
 
 .blue-ghost {
@@ -66,3 +66,16 @@ html, body {
   background-size: 30px;
   background-repeat: no-repeat;
 }
+
+.pacman {
+  background-image: url(./images/pacman.png);
+  background-position: center;
+  background-size: 30px;
+  background-repeat: no-repeat;
+}
+
+
+
+//down= transform: rotate(90deg);
+//right= transform: scaleX(-1);
+//up=  transform: rotate(270deg);
