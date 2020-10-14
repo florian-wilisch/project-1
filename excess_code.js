@@ -92,3 +92,89 @@ function coordinates2Cell(x, y) {
   return cellNum = (y * width) + x
 }
 // console.log(cell2Coordinates(207))
+
+
+//---------
+
+
+// function findPath(){
+  ghostsInterval = setInterval(() => {
+    const bgx = blueGhostPostion % width
+    const bgy = Math.floor(blueGhostPostion / width)
+    const px = pacmanPosition % width
+    const py = Math.floor(pacmanPosition / width)
+    //calculate quickest path 
+    const arrayCopy = rowArray.map((arr) => {
+      return [...arr]
+    })
+    arrayCopy[py][px] = 'Goal'
+  //check first run 
+    // if (checkFirst) {
+    //   checkFirst = false
+    nextPath = findShortestPath([bgy,bgx], arrayCopy)
+    // }
+  //move ghost
+    cells[blueGhostPostion].classList.remove('blue-ghost')
+    nextStep = nextPath[0]
+    // console.log(nextPath)
+    if (nextStep === 'North') {
+      blueGhostPostion -= width
+    } else if (nextStep === 'South') {
+      blueGhostPostion += width
+    } else if (nextStep === 'West') {
+      blueGhostPostion -= 1
+    } else if (nextStep === 'East') {
+      blueGhostPostion += 1
+    }
+    cells[blueGhostPostion].classList.add('blue-ghost')
+    // nextPath.pop()
+    if (blueGhostPostion === pacmanPosition || nextPath.length === 0) {
+      clearInterval(ghostsInterval)
+    }
+  }, 350)
+  // }
+  // findPath()
+
+
+// //-------------------------
+// //GHOST MOVEMENT
+// const up = ' - width'
+// const down = ' + width'
+// const left = ' - 1'
+// const right = ' + 1'
+// const ghostDirections = [up,left,down,right]
+// // let position1
+// // let position2
+// let rdmDireString = 0
+// let blueGhostMvmt = 0
+// // position1 = blueGhostPostion
+// function generateRdmDirect1(){
+//   rdmDireString = ghostDirections[Math.floor(Math.random() * 4)]
+//   console.log(rdmDireString)
+//   blueGhostMvmt = setInterval(() => {
+//     if (!cells[eval(blueGhostPostion + rdmDireString)].classList.contains('wall')) {
+//       cells[blueGhostPostion].classList.remove('blue-ghost')
+//       blueGhostPostion = eval(blueGhostPostion + rdmDireString)
+//       cells[blueGhostPostion].classList.add('blue-ghost')
+//     } else {
+//       generateRdmDirect2()
+//       clearInterval(blueGhostMvmt)
+//     }
+//   }, 350)
+// }
+// function generateRdmDirect2(){
+//   rdmDireString = ghostDirections[Math.floor(Math.random() * 4)]
+//   console.log(rdmDireString)
+//   blueGhostMvmt = setInterval(() => {
+//     if (!cells[eval(blueGhostPostion + rdmDireString)].classList.contains('wall')) {
+//       cells[blueGhostPostion].classList.remove('blue-ghost')
+//       blueGhostPostion = eval(blueGhostPostion + rdmDireString)
+//       cells[blueGhostPostion].classList.add('blue-ghost')
+//     } else {
+//       clearInterval(blueGhostMvmt)
+//       generateRdmDirect1()
+//     }
+//   }, 350)
+// }
+// // generateRdmDirect1()
+// //-----------------------------

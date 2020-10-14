@@ -9,34 +9,46 @@ let redGhostPosition = 117
 let yellowGhostPosition = 170
 let pinkGhostPostion = 171
 let playerPoints = 0
+let playerLives = 3
+const speed = 350
+
+document.querySelector('.player-lives').innerHTML = `Lives: ${playerLives}`
 
 
 //CREATING THE STARTING GRID
-for (let i = 0; i < width ** 2; i++) {
-  const div = document.createElement('div')
-  div.classList.add('cell')
-  grid.appendChild(div)
-  cells.push(div)
-  if (i === pacmanPosition) {
-    div.classList.add('pacman')
-  } else if (i === redGhostPosition) {
-    div.classList.add('red-ghost')
-  } else if (i === yellowGhostPosition) {
-    div.classList.add('yellow-ghost')
-  } else if (i === blueGhostPostion) {
-    div.classList.add('blue-ghost')
-  } else if (i === pinkGhostPostion) {
-    div.classList.add('pink-ghost')
-  } else if (superfood.indexOf(i) >= 0) {
-    div.classList.add('superfood')
-  } else if (path.indexOf(i) >= 0) {
-  } else {
-    div.classList.add('wall')
+function createGrid(){
+  let pacmanPosition = 242
+  let blueGhostPostion = 116
+  let redGhostPosition = 117
+  let yellowGhostPosition = 170
+  let pinkGhostPostion = 171 
+  for (let i = 0; i < width ** 2; i++) {
+    const div = document.createElement('div')
+    div.classList.add('cell')
+    grid.appendChild(div)
+    cells.push(div)
+    if (i === pacmanPosition) {
+      div.classList.add('pacman')
+    } else if (i === redGhostPosition) {
+      div.classList.add('red-ghost')
+    } else if (i === yellowGhostPosition) {
+      div.classList.add('yellow-ghost')
+    } else if (i === blueGhostPostion) {
+      div.classList.add('blue-ghost')
+    } else if (i === pinkGhostPostion) {
+      div.classList.add('pink-ghost')
+    } else if (superfood.indexOf(i) >= 0) {
+      div.classList.add('superfood')
+    } else if (path.indexOf(i) >= 0) {
+    } else {
+      div.classList.add('wall')
+    }
+    // div.innerHTML = i
+    // div.innerHTML = `${Math.floor(i / width)} ${(i % width)}`
+    // 
   }
-  // div.innerHTML = i
-  div.innerHTML = `${Math.floor(i / width)} ${(i % width)}`
-  // 
 }
+createGrid()
 
 //CREATING MATRIX GRID
 const pathArray = []
@@ -60,16 +72,63 @@ for (let i = 0; i < pathArray.length; i += width) {
 // console.log(rowArray)
 
 
+//COUNT POINTS
+function countFoodPoints(){
+  if (cells[pacmanPosition].classList.contains('no-background')) {
+    playerPoints
+  } else if (cells[pacmanPosition].classList.contains('superfood')) {
+    playerPoints += 100
+  } else {
+    playerPoints += 5
+  }
+  return playerPoints
+}
 
-//PACMAN MOVEMENT
-//Including tunnel
+
+//SET LOCAL STORAGE
+// if (localStorage) {
+//   playerPoints = JSON.parse(localStorage.getItem('scores'))
+//   // orderAndDisplayScores()
+// }
+// document.addEventListener('keydown', () => {
+//   if (localStorage) {
+//     localStorage.setItem('scores', JSON.stringify(playerPoints))
+//   }
+// })
+
+
+
+//PACMAN MOVEMENT (Including tunnel)
+//Start moving at beginning
 let pacMvmt = 0
 
+function pAutoMov(){
+
+  let firstKey = false
+  if (!firstKey) {
+    firstKey = true
+    pacMvmt = setInterval(() => {
+      countFoodPoints()
+      cells[pacmanPosition].classList.remove('pacman')
+      cells[pacmanPosition].classList.add('no-background')
+      pacmanPosition += 1
+      cells[pacmanPosition].classList.add('pacman')
+      document.querySelector('.player-points').innerHTML = `Points: ${playerPoints}`
+      if ((cells[pacmanPosition + 1].classList.contains('wall')) && pacmanPosition !== 161) {
+        clearInterval(pacMvmt)
+      }
+    },350)
+  }
+}
+pAutoMov()
+
+//Key stroke instructions
 document.addEventListener('keydown', (action) => {
   const key = action.key
   if (key === 'ArrowRight' && !(cells[pacmanPosition + 1].classList.contains('wall'))) {
     clearInterval(pacMvmt)
     pacMvmt = setInterval(() => {
+      countFoodPoints()
       cells[pacmanPosition].classList.remove('pacman')
       cells[pacmanPosition].classList.add('no-background')
       if ((pacmanPosition + 1) === 162) { 
@@ -78,6 +137,7 @@ document.addEventListener('keydown', (action) => {
         pacmanPosition += 1
       }
       cells[pacmanPosition].classList.add('pacman')
+      document.querySelector('.player-points').innerHTML = `Points: ${playerPoints}`
       if ((cells[pacmanPosition + 1].classList.contains('wall')) && pacmanPosition !== 161) {
         clearInterval(pacMvmt)
       }
@@ -85,10 +145,12 @@ document.addEventListener('keydown', (action) => {
   } else if (key === 'ArrowDown' && !(cells[pacmanPosition + width].classList.contains('wall'))) {
     clearInterval(pacMvmt)
     pacMvmt = setInterval(() => {
+      countFoodPoints()
       cells[pacmanPosition].classList.remove('pacman')
       cells[pacmanPosition].classList.add('no-background')
       pacmanPosition += width
       cells[pacmanPosition].classList.add('pacman')
+      document.querySelector('.player-points').innerHTML = `Points: ${playerPoints}`
       if (cells[pacmanPosition + width].classList.contains('wall')) {
         clearInterval(pacMvmt)
       }
@@ -96,6 +158,7 @@ document.addEventListener('keydown', (action) => {
   } else if (key === 'ArrowLeft' && !(cells[pacmanPosition - 1].classList.contains('wall'))) {
     clearInterval(pacMvmt)
     pacMvmt = setInterval(() => {
+      countFoodPoints()
       cells[pacmanPosition].classList.remove('pacman')
       cells[pacmanPosition].classList.add('no-background')
       if ((pacmanPosition - 1) === 143){
@@ -104,6 +167,7 @@ document.addEventListener('keydown', (action) => {
         pacmanPosition -= 1
       }
       cells[pacmanPosition].classList.add('pacman')
+      document.querySelector('.player-points').innerHTML = `Points: ${playerPoints}`
       if ((cells[pacmanPosition - 1].classList.contains('wall'))  && pacmanPosition !== 144) {
         clearInterval(pacMvmt)
       }
@@ -111,20 +175,20 @@ document.addEventListener('keydown', (action) => {
   } else if (key === 'ArrowUp' && !(cells[pacmanPosition - width].classList.contains('wall'))) {
     clearInterval(pacMvmt)
     pacMvmt = setInterval(() => {
+      countFoodPoints()
       cells[pacmanPosition].classList.remove('pacman')
       cells[pacmanPosition].classList.add('no-background')
       pacmanPosition -= width
       cells[pacmanPosition].classList.add('pacman')
+      document.querySelector('.player-points').innerHTML = `Points: ${playerPoints}`
       if (cells[pacmanPosition - width].classList.contains('wall')) {
         clearInterval(pacMvmt)
       }
-    },350)
+    }, speed)
   } else if (key === 'e') {
     clearInterval(ghostsInterval)
   }
 })
-
-
 
 
 //****PATHFINDING with Breadth-First (http://www.gregtrowbridge.com/a-basic-pathfinding-algorithm/
@@ -257,128 +321,68 @@ var exploreInDirection = function(currentLocation, direction, rowArray) {
 //GHOST MOVEMENT
 let ghostsInterval = 0
 
-let nextStep = 0
-console.log(blueGhostPostion % width)
-console.log(Math.floor(blueGhostPostion / width))
 
-let nextPath = 0
-// let checkFirst = true
+function findPath(whichGhost, ghostCSS){
+  ghostsInterval = setInterval(() => {
+    let nextStep = 0
+    let nextPath = 0
+    const gx = whichGhost % width
+    const gy = Math.floor(whichGhost / width)
+    const px = pacmanPosition % width
+    const py = Math.floor(pacmanPosition / width)
+    console.log((gy * width) + gx)
+    console.log((py * width) + px)
+    if (((gy * width) + gx) === ((py * width) + px) 
+    // || nextPath.length === 0
+    ) {
+      clearInterval(ghostsInterval)
+      clearInterval(pacMvmt)
+      playerLives -= 1
+      // setTimeout(() => {
+      //   for (let i = cells.length; i > 0; i--) {
+      //     const singleCell = document.querySelector('.cell')
+      //     singleCell.remove()
+      //   }
+      //   createGrid()
+      //   pAutoMov()
+      //   findPath(blueGhostPostion, 'blue-ghost')
+      // // findPath(redGhostPosition, 'red-ghost')
+      // // findPath(yellowGhostPosition, 'yellow-ghost')
+      // // findPath(pinkGhostPostion, 'pink-ghost')
+      // }, 4000)
+      // location.reload()
+    }
+    //calculate quickest path 
+    const arrayCopy = rowArray.map((arr) => {
+      return [...arr]
+    })
+    arrayCopy[py][px] = 'Goal'
+    nextPath = findShortestPath([gy,gx], arrayCopy)
+    console.log(nextPath)
+    // console.log(JSON.stringify(playerPoints))
+    //move ghost
 
-// function findPath(){
-ghostsInterval = setInterval(() => {
-  const bgx = blueGhostPostion % width
-  const bgy = Math.floor(blueGhostPostion / width)
-  const px = pacmanPosition % width
-  const py = Math.floor(pacmanPosition / width)
-  //calculate quickest path 
-  const arrayCopy = rowArray.map((arr) => {
-    return [...arr]
-  })
-  arrayCopy[py][px] = 'Goal'
-//check first run 
-  // if (checkFirst) {
-  //   checkFirst = false
-  nextPath = findShortestPath([bgy,bgx], arrayCopy)
-  // }
-//move ghost
-  cells[blueGhostPostion].classList.remove('blue-ghost')
-  nextStep = nextPath[0]
-  // console.log(nextPath)
-  if (nextStep === 'North') {
-    blueGhostPostion -= width
-  } else if (nextStep === 'South') {
-    blueGhostPostion += width
-  } else if (nextStep === 'West') {
-    blueGhostPostion -= 1
-  } else if (nextStep === 'East') {
-    blueGhostPostion += 1
-  }
-  cells[blueGhostPostion].classList.add('blue-ghost')
-  // nextPath.pop()
-  if (blueGhostPostion === pacmanPosition || nextPath.length === 0) {
-    clearInterval(ghostsInterval)
-  }
-}, 350)
-// }
-// findPath()
-
-// console.log(rowArray)
-
-// let testing = findShortestPath([1,1], arrayCopy)
-// console.log(testing)
-
-// const arrayCopy = rowArray.map((arr) => {
-//   return [...arr]
-// })
-// arrayCopy[11][12] = 'Goal'
-// console.log(findShortestPath([1,1], arrayCopy)[0])
-
-// const arrayCopy[13][8] = 'Goal'
-// function goal(y, x) {
-//   return arrayCopy[y][x] = 'Goal'
-// }
-
-
-
-function direct2coord(blueGhostPostion) {
-  if (this.nextStep === 'North') {
-    blueGhostPostion -= width
-  }
-  if (this.nextStep === 'South') {
-    blueGhostPostion += width
-  }
-  if (this.nextStep === 'West') {
-    blueGhostPostion -= 1
-  }
-  if (this.nextStep === 'East') {
-    blueGhostPostion += 1
-  }
-  return blueGhostPostion
+    cells[whichGhost].classList.remove(ghostCSS)
+    nextStep = nextPath[0]
+    if (nextStep === 'North') {
+      whichGhost -= width
+    } else if (nextStep === 'South') {
+      whichGhost += width
+    } else if (nextStep === 'West') {
+      whichGhost -= 1
+    } else if (nextStep === 'East') {
+      whichGhost += 1
+    }
+    cells[whichGhost].classList.add(ghostCSS)
+  }, speed)
 }
+// findPath(blueGhostPostion, 'blue-ghost')
+// findPath(redGhostPosition, 'red-ghost')
+// findPath(yellowGhostPosition, 'yellow-ghost')
+// findPath(pinkGhostPostion, 'pink-ghost')
 
 
-
-
-
-// //-------------------------
-// //GHOST MOVEMENT
-// const up = ' - width'
-// const down = ' + width'
-// const left = ' - 1'
-// const right = ' + 1'
-// const ghostDirections = [up,left,down,right]
-// // let position1
-// // let position2
-// let rdmDireString = 0
-// let blueGhostMvmt = 0
-// // position1 = blueGhostPostion
-// function generateRdmDirect1(){
-//   rdmDireString = ghostDirections[Math.floor(Math.random() * 4)]
-//   console.log(rdmDireString)
-//   blueGhostMvmt = setInterval(() => {
-//     if (!cells[eval(blueGhostPostion + rdmDireString)].classList.contains('wall')) {
-//       cells[blueGhostPostion].classList.remove('blue-ghost')
-//       blueGhostPostion = eval(blueGhostPostion + rdmDireString)
-//       cells[blueGhostPostion].classList.add('blue-ghost')
-//     } else {
-//       generateRdmDirect2()
-//       clearInterval(blueGhostMvmt)
-//     }
-//   }, 350)
-// }
-// function generateRdmDirect2(){
-//   rdmDireString = ghostDirections[Math.floor(Math.random() * 4)]
-//   console.log(rdmDireString)
-//   blueGhostMvmt = setInterval(() => {
-//     if (!cells[eval(blueGhostPostion + rdmDireString)].classList.contains('wall')) {
-//       cells[blueGhostPostion].classList.remove('blue-ghost')
-//       blueGhostPostion = eval(blueGhostPostion + rdmDireString)
-//       cells[blueGhostPostion].classList.add('blue-ghost')
-//     } else {
-//       clearInterval(blueGhostMvmt)
-//       generateRdmDirect1()
-//     }
-//   }, 350)
-// }
-// // generateRdmDirect1()
-// //-----------------------------
+//GAME OVER MESSAGE
+if (playerLives === 0) {
+  alert('Game Over!')
+}
