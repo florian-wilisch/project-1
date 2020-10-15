@@ -178,3 +178,86 @@ function coordinates2Cell(x, y) {
 // }
 // // generateRdmDirect1()
 // //-----------------------------
+
+
+//rebuild grid
+      // setTimeout(() => {
+      //   for (let i = cells.length; i > 0; i--) {
+      //     const singleCell = document.querySelector('.cell')
+      //     singleCell.remove()
+      //   }
+      //   createGrid()
+      //   pAutoMov()
+      //   findPath(blueGhostPostion, 'blue-ghost')
+      // // findPath(redGhostPosition, 'red-ghost')
+      // // findPath(yellowGhostPosition, 'yellow-ghost')
+      // // findPath(pinkGhostPostion, 'pink-ghost')
+      // }, 4000)
+      // location.reload()
+
+
+
+      
+//------------
+      //FLEEING BEHAVIOUR
+// let fleeingInterval = 0
+// function fleeingPath(redGhostPosition, ghostCSS){
+//   fleeingInterval = setInterval(() => {
+//     fleeingInterval += 1  
+//     if (fleeingInterval > 15) {
+//       clearInterval(fleeingInterval)
+//       findStraightPath(redGhostPosition, 'red-ghost')
+//       // findPlus2Path(blueGhostPosition, 'blue-ghost')
+//       // findMinus2Path(pinkGhostPosition, 'pink-ghost')
+//       // findSwitchPath(yellowGhostPosition, 'yellow-ghost')
+//     } else {
+//       let nextStep = 0
+//       let nextPath = 0
+//       const gx = redGhostPosition % width
+//       const gy = Math.floor(redGhostPosition / width)
+//       const px = pacmanPosition % width
+//       const py = Math.floor(pacmanPosition / width)
+//       console.log((gy * width) + gx)
+//       console.log((py * width) + px)
+//       //calculate quickest path 
+//       const arrayCopy = rowArray.map((arr) => {
+//         return [...arr]
+//       })
+//       if (py <= 8 && px <= 8) {
+//         arrayCopy[16][16] = 'Goal'
+//       } else if (py > 8 && px <= 8) {
+//         arrayCopy[1][16] = 'Goal'
+//       } else if (py <= 8 && px > 8) {
+//         arrayCopy[16][1] = 'Goal'
+//       } else if (py > 8 && px > 8) {
+//         arrayCopy[1][1] = 'Goal' 
+//       }
+//       // arrayCopy[py][px] = 'Goal'
+//       nextPath = findShortestPath([gy,gx], arrayCopy)
+//       console.log(nextPath)
+//       //move ghost
+//       cells[redGhostPosition].classList.remove(ghostCSS)
+//       if (((gy * width) + gx) === ((py * width) + px) 
+//       // || nextPath.length === 0
+//       ) {
+//         clearInterval(fleeingInterval)
+//         clearInterval(pacMvmt)
+//         playerLives -= 1
+//       }
+//       nextStep = nextPath[0]
+//       if (nextStep === 'North') {
+//         redGhostPosition -= width
+//       } else if (nextStep === 'South') {
+//         redGhostPosition += width
+//       } else if (nextStep === 'West') {
+//         redGhostPosition -= 1
+//       } else if (nextStep === 'East') {
+//         redGhostPosition += 1
+//       }
+//       cells[redGhostPosition].classList.add(ghostCSS)
+
+//       console.log(fleeingInterval)
+//     }
+//   }, speed)
+// }
+// fleeingPath(pinkGhostPosition, 'pink-ghost')
