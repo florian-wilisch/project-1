@@ -717,3 +717,18 @@ function checkGameOver(){
     resetPositions()
   }
 }
+
+//SOUNDS/MUTE
+let mute = false
+const muteButton = document.querySelector('.mute')
+muteButton.addEventListener('click', () => {
+  if (!mute) {
+    mute = true
+    document.querySelector('audio').muted = true
+    document.querySelector('.mute').classList.add('soundoff')
+  } else {
+    mute = false
+    document.querySelector('audio').muted = false
+    document.querySelector('.mute').classList.remove('soundoff')
+  }
+})
