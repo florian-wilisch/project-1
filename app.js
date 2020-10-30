@@ -17,7 +17,7 @@ document.querySelector('.player-points').innerHTML = `Points: ${playerPoints}`
 
 function updateLives() {
   document.querySelector('.player-lives').innerHTML = `Lives: ${playerLives}`
-} 
+}
 updateLives()
 
 
@@ -108,11 +108,11 @@ function resetYellow() {
 
 //CREATING THE STARTING GRID
 function createGrid(){
-  const pacmanPosition = 242
-  const blueGhostPosition = 116
-  const redGhostPosition = 117
-  const yellowGhostPosition = 170
-  const pinkGhostPosition = 171
+  // // const pacmanPosition = 242
+  // const blueGhostPosition = 116
+  // const redGhostPosition = 117
+  // const yellowGhostPosition = 170
+  // const pinkGhostPosition = 171
   for (let i = 0; i < width ** 2; i++) {
     const div = document.createElement('div')
     div.classList.add('cell')
@@ -258,6 +258,7 @@ document.addEventListener('keydown', () => {
     setTimeout(() => {
       findSwitchPath(yellowGhostPosition, 'yellow-ghost')
     }, 1000)
+    
   }
 })
 
