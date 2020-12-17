@@ -1,6 +1,18 @@
 ### ![GA](https://cloud.githubusercontent.com/assets/40461/8183776/469f976e-1432-11e5-8199-6ac91363302b.png) General Assembly, Software Engineering Immersive
 # Pac-Man
 
+
+   _ (`-.    ('-.                        _   .-')      ('-.         .-') _  
+  ( (OO  )  ( OO ).-.                   ( '.( OO )_   ( OO ).-.    ( OO ) ) 
+ _.`     \  / . --. /   .-----.          ,--.   ,--.) / . --. /,--./ ,--,'  
+(__...--''  | \-.  \   '  .--./    .-')  |   `.'   |  | \-.  \ |   \ |  |\  
+ |  /  | |.-'-'  |  |  |  |('-.  _(  OO) |         |.-'-'  |  ||    \|  | ) 
+ |  |_.' | \| |_.'  | /_) |OO  )(,------.|  |'.'|  | \| |_.'  ||  .     |/  
+ |  .___.'  |  .-.  | ||  |`-'|  '------'|  |   |  |  |  .-.  ||  |\    |   
+ |  |       |  | |  |(_'  '--'\          |  |   |  |  |  | |  ||  | \   |   
+ `--'       `--' `--'   `-----'          `--'   `--'  `--' `--'`--'  `--'   
+
+
 ## Overview
 This is my first project as part of the software engineering immersive course at GA London. The assignment was to create a grid-based game to be rendered in the browser, using HTML, CSS and JavaScript. The project was to be completed **individually** within **one week**.
 
@@ -164,6 +176,7 @@ if (((gy * width) + gx) === (py * width) + px) {
   (...)
 }
 ```
+(see Bugs section for more comments and thoughts)
 
 
 ### Toggle / Counter variables
@@ -184,33 +197,44 @@ let redFleeingCounter = 0
   }
 ```
 
-### Sound
-...
-### Game end
-...
-
 ## Screenshots
-- start screen
-- normal movement screen
-- fleeing screen
+Start screen
+![Start screen](./images/screenshots/home.png)
+
+Playing 
+![Play screen](./images/screenshots/playing.png)
+
+Fleeing
+![fleeing screen](./images/screenshots/fleeing.png)
 
 ## Challenges / Victories
-- Different characters of ghosts
-- toggles
-- Tunnel
-- Pathfinding
-- DRY
+### Different characters of ghosts
+Giving the ghosts different characters was important as they'd otherwise just be taking the same path towards Pac-Man. I tried to replicate the characters they have in the original game but I didn't manage to implement a good solution for *Inky* and *Pinky* ('[...] position themselves in front of Pac-Man'). They are now always aiming at a couple of cells before or after Pac-Man, which means that when they come close, they actually stop hunting and move away. As a solution to this I could have built in a switch in the behaviour when these ghosts get close to Pac-Man - their target position would then become Pac-Man (and maybe switch back after a few steps).
+### Pathfinding
+The pathfinding algorithm was fairly straightforward to unxderstand but it user coordinates rather then a simple number to identify a cell. There's advantages and disadvantages to both techniques but using both made it sometimes tricky to combine the information and pass it back and forth.
+### DRY
+From the beginning it felt wrong to be repeating a lot of the code for each ghost. I tried to avoid this by passing 'ghost variables' into the functions but it just ended up making things much more complicated. Therefor I had to retreat and multiply the code. I should have started with this and then looked at optimising later! 
 
 ## Bugs
-- missing each other when coming from across each other
+### Collision failing: 
+Pac-Man and the ghosts seem to regularly miss each other. I believe this must be down to the fact that, at the moment of collision, they are switching cells at exactly the same time, meaning that they are never on the same cell at the same time.
 
+I'd probably fix this by keeping track of the current and previous position of all ghosts and Pac-Man. Then collision could be defined, not only when they are on the same cell but also when their current-previous position pair are the same but inverted. 
+
+For ex:
+```
+let pacman = [147, 148]
+let blueGhost = [148,147]
+
+==> COLLISION
+```
 ## Potential future features 
-- ghosts starting in the middle
-- mobile responsive
-- levels
-- local storage
+- Ghosts starting on the middle island: I started implementing this (instead of having them start on the path cells) but it was actually more complicated than expected due to the 'wall cells' not being breachable.
+- Make it mobile responsive.
+- Implement different levels, by increasing speed variable.
+- Local storage for leaderboard.
 
 ## Images & audio
 - pacman.co
-- noun project
-- google for the logo
+- [Noun Project](https://thenounproject.com/)
+- Logo from google
