@@ -200,15 +200,13 @@ let redFleeingCounter = 0
 
 ## Screenshots
 
-img[alt=Play-screen] { width: 200px; }
-
-####Start screen
+#### Start screen
 ![Start screen](./images/screenshots/home.png)
 
-####Playing 
+#### Playing 
 ![Play-screen](./images/screenshots/playing.png)
 
-####Fleeing
+#### Fleeing
 ![fleeing screen](./images/screenshots/fleeing.png)
 
 ## Challenges / Victories
