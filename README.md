@@ -1,7 +1,7 @@
 ### ![GA](https://cloud.githubusercontent.com/assets/40461/8183776/469f976e-1432-11e5-8199-6ac91363302b.png) General Assembly, Software Engineering Immersive
 # Pac-Man
 
-
+```
    _ (`-.    ('-.                        _   .-')      ('-.         .-') _  
   ( (OO  )  ( OO ).-.                   ( '.( OO )_   ( OO ).-.    ( OO ) ) 
  _.`     \  / . --. /   .-----.          ,--.   ,--.) / . --. /,--./ ,--,'  
@@ -12,6 +12,7 @@
  |  |       |  | |  |(_'  '--'\          |  |   |  |  |  | |  ||  | \   |   
  `--'       `--' `--'   `-----'          `--'   `--'  `--' `--'`--'  `--'   
 
+```
 
 ## Overview
 This is my first project as part of the software engineering immersive course at GA London. The assignment was to create a grid-based game to be rendered in the browser, using HTML, CSS and JavaScript. The project was to be completed **individually** within **one week**.
@@ -198,13 +199,16 @@ let redFleeingCounter = 0
 ```
 
 ## Screenshots
-Start screen
+
+img[alt=Play-screen] { width: 200px; }
+
+####Start screen
 ![Start screen](./images/screenshots/home.png)
 
-Playing 
-![Play screen](./images/screenshots/playing.png)
+####Playing 
+![Play-screen](./images/screenshots/playing.png)
 
-Fleeing
+####Fleeing
 ![fleeing screen](./images/screenshots/fleeing.png)
 
 ## Challenges / Victories
