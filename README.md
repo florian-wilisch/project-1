@@ -201,13 +201,10 @@ let redFleeingCounter = 0
 ## Screenshots
 
 #### Start screen
-![Start screen](./images/screenshots/home.png)
+<img src="./images/screenshots/home.png" alt="start screen" width=75%/>
 
-#### Playing 
-![Play-screen](./images/screenshots/playing.png)
-
-#### Fleeing
-![fleeing screen](./images/screenshots/fleeing.png)
+#### Play screen & Flee screen
+<img src="./images/screenshots/playing.png" alt="play screen" width=43%/> <img src="./images/screenshots/fleeing.png" alt="fleeing screen" width=42.5%/>
 
 ## Challenges / Victories
 ### Different characters of ghosts

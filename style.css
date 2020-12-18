@@ -209,4 +209,6 @@ footer p {
   line-height: 25px;
 }
 
-img[alt=Play-screen] { width: 50px; }
+img[alt='Play-screen'] { 
+  width: 50px; 
+}
