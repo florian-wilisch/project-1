@@ -215,9 +215,9 @@ The pathfinding algorithm was fairly straightforward to unxderstand but it user 
 From the beginning it felt wrong to be repeating a lot of the code for each ghost. I tried to avoid this by passing 'ghost variables' into the functions but it just ended up making things much more complicated. Therefor I had to retreat and multiply the code. I should have started with this and then looked at optimising later! 
 
 ## Key Learnings
-* Learned to create automated (ghost) and player activated movement
-* Learned to understand a pathfinding algorythm and to implement it
-* Learned to create game 'states' without React using variables
+* Learned to create automated (ghost) and player activated movement, limited by static partitions (walls).
+* Learned to understand a pathfinding algorythm and to implement it.
+* Learned to create game 'states' without React using variables.
 ## Bugs
 ### Collision failing: 
 Pac-Man and the ghosts seem to regularly miss each other. I believe this must be down to the fact that, at the moment of collision, they are switching cells at exactly the same time, meaning that they are never on the same cell at the same time.
